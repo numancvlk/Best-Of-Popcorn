@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/User";
 import jwt from "jsonwebtoken";
-import "dotenv/config";
 import expressAsyncHandler from "express-async-handler";
 import mongoose from "mongoose";
 
@@ -16,11 +15,6 @@ const generateToken = (id: string, role: string): string => {
 const registerUser = expressAsyncHandler(
   async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
-
-    if (!username || !email || !password) {
-      res.status(400);
-      throw new Error("Tüm alanları doldurunuz.");
-    }
 
     //KULLANICI VAR MI YOK MU?
     const userExist = await User.findOne({ $or: [{ email }, { username }] });
@@ -54,4 +48,26 @@ const registerUser = expressAsyncHandler(
   }
 );
 
-export { registerUser };
+const loginUser = expressAsyncHandler(async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email }).select("+password");
+
+  if (!user || !(await user.matchPassword(password))) {
+    res.status(401);
+    throw new Error("Yetkisiz Giriş");
+  }
+
+  const userId = (user._id as mongoose.Types.ObjectId).toString();
+  const userRole = user.role;
+
+  res.json({
+    _id: userId,
+    username: user.username,
+    email: user.email,
+    role: userRole,
+    token: generateToken(userId, userRole),
+  });
+});
+
+export { registerUser, loginUser };

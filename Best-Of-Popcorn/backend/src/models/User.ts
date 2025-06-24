@@ -20,7 +20,7 @@ const UserSchema: Schema = new Schema(
       required: [true, "Username alanı boş geçilemez."],
       unique: true,
       trim: true,
-      minLength: [3, "Username en az 3 harfli olmalıdır."],
+      minLength: 3,
     },
     email: {
       type: String,
@@ -32,7 +32,7 @@ const UserSchema: Schema = new Schema(
     password: {
       type: String,
       required: [true, "Parola alanı boş geçilemez."],
-      minLength: [6, "Parola en az 6 karakter içermelidir."],
+      minLength: 6,
       select: false,
     },
     role: {

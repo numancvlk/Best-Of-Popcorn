@@ -2,7 +2,8 @@
 
 //----------GEREKLİ KÜTÜPHANELER------------
 import mongoose from "mongoose";
-import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config();
 
 const mongoURI: string | undefined = process.env.MONGO_URI;
 
