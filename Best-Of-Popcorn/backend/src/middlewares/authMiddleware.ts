@@ -64,9 +64,13 @@ export const authorizeRoles = (roles: Array<"user1" | "user2" | "user3">) => {
       throw new Error("Yetkilendirme için kullanıcı bilgisi bulunamadı.");
     }
 
+    if (req.user.role === "user1") {
+      return next();
+    }
+
     if (!roles.includes(req.user.role)) {
       res.status(403);
-      throw new Error(`Rolünüz (${req.user.role}) bu işleme yetkili değil.`);
+      throw new Error("Rolünüz bu işleme yetkili değil.");
     }
     next();
   };

@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import connectDB from "./config/db";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
+import movieRoutes from "./routes/movieRoutes";
+import actorRoutes from "./routes/actorRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
 
 dotenv.config();
@@ -12,6 +14,8 @@ const app = express();
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/admin/users", userRoutes);
+app.use("/api/movies", movieRoutes);
+app.use("/api/actors", actorRoutes);
 
 const PORT = process.env.PORT;
 

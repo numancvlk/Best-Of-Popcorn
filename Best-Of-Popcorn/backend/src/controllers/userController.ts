@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import expressAsyncHandler from "express-async-handler";
 //----------SCRIPTS---------
 import User from "../models/User";
-import mongoose from "mongoose";
 
 const getAllUsers = expressAsyncHandler(async (req: Request, res: Response) => {
   const users = await User.find({}).select("-password");

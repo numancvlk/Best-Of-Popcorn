@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import axios from "axios";
-import expressAsyncHandler from "express-async-handler";
 import "dotenv";
+import expressAsyncHandler from "express-async-handler";
 
 const api = process.env.TMDB_API_KEY;
 
-const getPopularMovies = expressAsyncHandler(
+const getPopularActors = expressAsyncHandler(
   async (req: Request, res: Response) => {
     if (!api) {
       res.status(500);
@@ -13,13 +13,13 @@ const getPopularMovies = expressAsyncHandler(
     }
     try {
       const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${api}`
+        `https://api.themoviedb.org/3/person/popular?api_key=${api}`
       );
-      res.status(200).json(response.data); //API'DEN GELEN VERİYİ DÖNDÜRÜR
+      res.status(200).json(response.data);
     } catch (error) {
       console.log("TMDB API HATASI");
     }
   }
 );
 
-export { getPopularMovies };
+export { getPopularActors };
