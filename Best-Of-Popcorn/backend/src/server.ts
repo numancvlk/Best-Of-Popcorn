@@ -4,12 +4,14 @@ import dotenv from "dotenv";
 //-----------SCRİPTS------------
 import connectDB from "./config/db";
 import authRoutes from "./routes/authRoutes";
+import userRoutes from "./routes/userRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
 
 dotenv.config();
 const app = express();
 app.use(express.json());
 app.use("/api/auth", authRoutes);
+app.use("/api/admin/users", userRoutes);
 
 const PORT = process.env.PORT;
 
