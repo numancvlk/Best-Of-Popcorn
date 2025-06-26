@@ -7,7 +7,7 @@ export interface IUser extends Document {
   username: string;
   email: string;
   password: string;
-  role: "user1" | "user2" | "user3";
+  role: "adminRole" | "actorRole" | "movieRole";
   createdAt: Date;
   updatedAt: Date;
   matchPassword(enteredPassword: string): Promise<boolean>;
@@ -37,8 +37,8 @@ const UserSchema: Schema = new Schema(
     },
     role: {
       type: String,
-      enum: ["user1", "user2", "user3"],
-      default: "user3",
+      enum: ["adminRole", "actorRole", "movieRole"],
+      default: "movieRole",
     },
   },
   {

@@ -17,16 +17,16 @@ const updateUserRole = expressAsyncHandler(
     const userId = req.params.id;
     const { role } = req.body;
 
-    const validRoles: Array<"user1" | "user2" | "user3"> = [
-      "user1",
-      "user2",
-      "user3",
+    const validRoles: Array<"adminRole" | "actorRole" | "movieRole"> = [
+      "adminRole",
+      "actorRole",
+      "movieRole",
     ];
 
     if (!role || !validRoles.includes(role)) {
       res.status(400);
       throw new Error(
-        "Geçersiz rol belirtildi. Geçerli roller: user1, user2, user3."
+        "Geçersiz rol belirtildi. Geçerli roller: adminRole, actorRole, movieRole."
       );
     }
     if (

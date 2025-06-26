@@ -10,19 +10,24 @@ import { protect, authorizeRoles } from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.get("/popular", protect, authorizeRoles(["user3"]), getPopularMovies);
+router.get(
+  "/popular",
+  protect,
+  authorizeRoles(["adminRole", "movieRole"]),
+  getPopularMovies
+);
 
 router.get(
   "/:id",
   protect,
-  authorizeRoles(["user1", "user3"]),
+  authorizeRoles(["adminRole", "movieRole"]),
   getMovieDetailAndReviews
 );
 
 router.post(
   "/:id/reviews",
   protect,
-  authorizeRoles(["user1", "user3"]),
+  authorizeRoles(["adminRole", "movieRole"]),
   addReviewToMovie
 );
 

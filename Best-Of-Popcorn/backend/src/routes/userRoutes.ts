@@ -5,8 +5,8 @@ import { protect, authorizeRoles } from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.get("/", protect, authorizeRoles(["user1"]), getAllUsers);
+router.get("/", protect, authorizeRoles(["adminRole"]), getAllUsers);
 
-router.put("/:id/role", protect, authorizeRoles(["user1"]), updateUserRole);
+router.put("/:id/role", protect, authorizeRoles(["adminRole"]), updateUserRole);
 
 export default router;

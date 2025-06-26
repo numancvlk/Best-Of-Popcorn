@@ -9,7 +9,7 @@ declare global {
     interface Request {
       user?: {
         id: mongoose.Types.ObjectId;
-        role: "user1" | "user2" | "user3";
+        role: "adminRole" | "actorRole" | "movieRole";
       };
     }
   }
@@ -57,14 +57,16 @@ export const protect = expressAsyncHandler(
   }
 );
 
-export const authorizeRoles = (roles: Array<"user1" | "user2" | "user3">) => {
+export const authorizeRoles = (
+  roles: Array<"adminRole" | "actorRole" | "movieRole">
+) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {
       res.status(401);
       throw new Error("Yetkilendirme için kullanıcı bilgisi bulunamadı.");
     }
 
-    if (req.user.role === "user1") {
+    if (req.user.role === "adminRole") {
       return next();
     }
 

@@ -6,6 +6,11 @@ import { protect, authorizeRoles } from "../middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.get("/popular", protect, authorizeRoles(["user2"]), getPopularActors);
+router.get(
+  "/popular",
+  protect,
+  authorizeRoles(["actorRole"]),
+  getPopularActors
+);
 
 export default router;
