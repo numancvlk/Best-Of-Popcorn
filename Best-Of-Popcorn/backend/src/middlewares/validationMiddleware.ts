@@ -12,8 +12,9 @@ export const validateEmail = asyncHandler(
     const { email } = req.body;
 
     if (!email || !emailRegex.test(email)) {
-      res.status(400);
-      throw new Error("Geçerli bir e-posta adresi giriniz.");
+      return res
+        .status(400)
+        .json({ message: "Geçerli bir E-Posta adresi giriniz!" });
     }
     next();
   }
@@ -24,12 +25,14 @@ export const validateUsername = asyncHandler(
     const { username } = req.body;
 
     if (!username) {
-      res.status(400);
-      throw new Error("Kullanıcı adı alanı boş geçilemez.");
+      return res
+        .status(400)
+        .json({ message: "Kullanıcı adı alanı boş geçilemez!" });
     }
     if (username.length < 3) {
-      res.status(400);
-      throw new Error("Kullanıcı adı en az 3 karakter içermelidir.");
+      return res
+        .status(400)
+        .json({ message: "Kullanıcı adı en az 3 karakter içermelidir!" });
     }
     next();
   }
@@ -40,12 +43,12 @@ export const validatePassword = asyncHandler(
     const { password } = req.body;
 
     if (!password) {
-      res.status(400);
-      throw new Error("Parola alanı boş geçilemez.");
+      return res.status(400).json({ message: "Parola alanı boş geçilemez!" });
     }
     if (password.length < 6) {
-      res.status(400);
-      throw new Error("Parola en az 6 karakter içermelidir.");
+      return res
+        .status(400)
+        .json({ message: "Parola en az 6 karakter içermelidir!" });
     }
     next();
   }
@@ -56,8 +59,7 @@ export const validateRegisterFields = asyncHandler(
     const { username, email, password } = req.body;
 
     if (!username || !email || !password) {
-      res.status(400);
-      throw new Error("Tüm alanları doldurunuz.");
+      return res.status(400).json({ message: "Tüm alanları doldurunuz!" });
     }
     next();
   }
@@ -68,8 +70,7 @@ export const validateLoginFields = asyncHandler(
     const { email, password } = req.body;
 
     if (!email || !password) {
-      res.status(400);
-      throw new Error("Tüm Alanları Doldurunuz");
+      return res.status(400).json({ message: "Tüm alanları doldurunuz!" });
     }
     next();
   }

@@ -3,15 +3,12 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
-    "paths": {
-      "@env": ["./.env"]
-    }
+  
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
-    ".env" 
   ],
 }
