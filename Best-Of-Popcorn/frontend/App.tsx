@@ -15,7 +15,7 @@ const STACK = createStackNavigator<RootStackParamList>();
 export default function App() {
   return (
     <NavigationContainer>
-      <STACK.Navigator>
+      <STACK.Navigator screenOptions={{ headerShown: false }}>
         <STACK.Screen name="Login" component={LoginScreen} />
         <STACK.Screen name="Register" component={RegisterScreen} />
         <STACK.Screen name="Home" component={HomeScreen} />
