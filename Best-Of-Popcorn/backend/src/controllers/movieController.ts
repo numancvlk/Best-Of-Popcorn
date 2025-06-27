@@ -7,17 +7,20 @@ import expressAsyncHandler from "express-async-handler";
 import Review from "../models/Review";
 import User from "../models/User";
 
-const api = process.env.TMDB_API_KEY;
+const TMDB_API = process.env.TMDB_API_KEY;
+const TMDB_BASE = process.env.TMDB_BASE_URL;
 
 const getPopularMovies = expressAsyncHandler(
   async (req: Request, res: Response) => {
-    if (!api) {
-      res.status(500);
-      throw new Error("TMDB Anahtarı Bulunamadı");
+    if (!TMDB_API || !TMDB_BASE) {
+      res.status(500).json({ message: "TMDB API veya TMDB BASE URL eksik" });
+      return;
     }
     try {
       const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${api}`
+        `${TMDB_BASE}/movie/popular?api_key=${TMDB_API}&language=tr-TR&page=${
+          req.query.page || 1
+        }`
       );
       res.status(200).json(response.data); //API'DEN GELEN VERİYİ DÖNDÜRÜR
     } catch (error) {
@@ -32,23 +35,27 @@ const addReviewToMovie = expressAsyncHandler(
     const { rating, comment } = req.body;
 
     if (!req.user || !req.user.id) {
-      res.status(401);
-      throw new Error("Yorum Eklemek İçin Lütfen Giriş Yapınız");
+      res
+        .status(401)
+        .json({ message: "Yorum yapmak için lütfen giriş yapınız." });
+      return;
     }
 
     if (isNaN(movieId) || movieId <= 0) {
-      res.status(400);
-      throw new Error("Geçersiz Film");
+      res.status(400).json({ message: "Geçersiz Film" });
+      return;
     }
 
     if (!rating || rating < 1 || rating > 10) {
-      res.status(400);
-      throw new Error("1 - 10 arasında seçiminizi yapınız.");
+      res
+        .status(400)
+        .json({ message: "1 ile 10 arasında bir puanlama yapınız" });
+      return;
     }
 
     if (!comment || comment.trim() === "") {
-      res.status(400);
-      throw new Error("Yorum alanı boş bırakılamaz.");
+      res.status(400).json({ message: "Yorum alanı boş bırakılamaz" });
+      return;
     }
 
     const existingReview = await Review.findOne({
@@ -56,10 +63,11 @@ const addReviewToMovie = expressAsyncHandler(
       userId: req.user.id,
     });
     if (existingReview) {
-      res.status(400);
-      throw new Error(
-        "Bu filme zaten bir yorum eklediniz. Mevcut yorumunuzu güncelleyebilirsiniz."
-      );
+      res.status(400).json({
+        message:
+          "Bu filme zaten yorum eklediniz, mevcut yorumunuzu güncelleyebilirsiniz.",
+      });
+      return;
     }
 
     const newReview = await Review.create({
@@ -81,13 +89,19 @@ const getMovieDetailAndReviews = expressAsyncHandler(
     const movieId = parseInt(req.params.id);
 
     if (isNaN(movieId) || movieId <= 0) {
-      res.status(400);
-      throw new Error("Geçersiz Film ID'si");
+      res.status(400).json({ message: "Film ID geçersiz." });
+      return;
     }
 
     try {
       const movieDetailResponse = await axios.get(
-        `https://api.themoviedb.org/3/movie/${movieId}?api_key=${api}`
+        `${TMDB_BASE}/movie/${movieId}`,
+        {
+          params: {
+            api_key: TMDB_API,
+            language: "tr-TR",
+          },
+        }
       );
 
       const movieDetails = movieDetailResponse.data;
@@ -104,16 +118,12 @@ const getMovieDetailAndReviews = expressAsyncHandler(
       });
     } catch (error: any) {
       if (error.response && error.response.status === 404) {
-        res.status(404);
-        throw new Error("Film bulunamadı.");
+        res.status(404).json({ message: "Film Bulunamadı" });
+        return;
       }
       res.status(error.response?.status || 500);
-      throw new Error(
-        error.response?.data?.status_message ||
-          "Film detayları veya yorumlar çekilirken bir hata oluştu."
-      );
     }
   }
 );
 
-export { getPopularMovies, addReviewToMovie, getMovieDetailAndReviews };
+export { addReviewToMovie, getMovieDetailAndReviews };

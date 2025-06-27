@@ -20,8 +20,8 @@ const registerUser = expressAsyncHandler(
     const userExist = await User.findOne({ $or: [{ email }, { username }] });
 
     if (userExist) {
-      res.status(400);
-      throw new Error("Bu kullanıcı zaten mevcut.");
+      res.status(400).json({ message: "Bu kullanıcı zaten mevcut." });
+      return;
     }
 
     //YENİ KULLANICIYI BURDA OLUSTURDUM
@@ -42,8 +42,8 @@ const registerUser = expressAsyncHandler(
         token: generateToken(userId, userRole),
       });
     } else {
-      res.status(400);
-      throw new Error("Geçersiz kullanıcı");
+      res.status(400).json({ message: "Geçersiz Kullanıcı" });
+      return;
     }
   }
 );
@@ -54,8 +54,8 @@ const loginUser = expressAsyncHandler(async (req: Request, res: Response) => {
   const user = await User.findOne({ email }).select("+password");
 
   if (!user || !(await user.matchPassword(password))) {
-    res.status(401);
-    throw new Error("Yetkisiz Giriş");
+    res.status(401).json({ message: "E-Posta veya Şifre yanlış" });
+    return;
   }
 
   const userId = (user._id as mongoose.Types.ObjectId).toString();

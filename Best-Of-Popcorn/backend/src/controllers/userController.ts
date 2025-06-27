@@ -24,26 +24,22 @@ const updateUserRole = expressAsyncHandler(
     ];
 
     if (!role || !validRoles.includes(role)) {
-      res.status(400);
-      throw new Error(
-        "Geçersiz rol belirtildi. Geçerli roller: adminRole, actorRole, movieRole."
-      );
+      res.status(400).json({ message: "Geçersiz Rol!" });
+      return;
     }
     if (
       req.user &&
       req.user.id.toString() === userId &&
       role !== req.user.role
     ) {
-      res.status(403);
-      throw new Error(
-        "Kendi rolünüzü doğrudan bu endpoint üzerinden değiştiremezsiniz."
-      );
+      res.status(403).json({ message: "Kendi rolünüzü değiştiremezsiniz" });
+      return;
     }
     const user = await User.findById(userId);
 
     if (!user) {
-      res.status(404);
-      throw new Error("Kullanıcı bulunamadı.");
+      res.status(404).json({ message: "Kullanıcı Bulunamadı" });
+      return;
     }
 
     user.role = role;

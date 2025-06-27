@@ -16,7 +16,7 @@ const connectDB = async () => {
     await mongoose.connect(mongoURI);
     console.log("Başarıyla Bağlanıldı");
   } catch (error) {
-    console.log("Bağlantı Hatası", error);
+    console.log("Bağlantı Hatası");
   }
 };
 

@@ -9,13 +9,7 @@ const login = async (email: string, password: string) => {
 
     return response.data;
   } catch (error: any) {
-    const detailedErrorMessage =
-      error.response?.data?.message ||
-      (typeof error.response?.data === "string" ? error.response.data : null) ||
-      error.message ||
-      "Bilinmeyen bir hata oluştu.";
-
-    throw new Error(detailedErrorMessage);
+    throw new Error("Bilinmeyen bir hata oluştu.");
   }
 };
 
@@ -29,13 +23,7 @@ const register = async (username: string, email: string, password: string) => {
 
     return response.data;
   } catch (error: any) {
-    const detailedErrorMessage =
-      error.response?.data?.message ||
-      (typeof error.response?.data === "string" ? error.response.data : null) ||
-      error.message ||
-      "Bilinmeyen bir hata oluştu.";
-
-    throw new Error(detailedErrorMessage);
+    throw new Error("Bilinmeyen bir hata oluştu.");
   }
 };
 

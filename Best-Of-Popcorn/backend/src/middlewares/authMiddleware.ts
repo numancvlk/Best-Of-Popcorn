@@ -33,26 +33,25 @@ export const protect = expressAsyncHandler(
         const user = await User.findById(decoded.id).select("-password");
 
         if (!user) {
-          res.status(401);
-          throw new Error("Kullanıcı bulunamadı, token geçersiz.");
+          res.status(401).json({ message: "Kullanıcı bulunamadı" });
+          return;
         }
 
         req.user = {
           id: user._id as mongoose.Types.ObjectId,
-          role: user.role,
+          role: user.role as "adminRole" | "actorRole" | "movieRole",
         };
 
         next();
       } catch (error: any) {
         console.error(error);
-        res.status(401);
-        throw new Error("Yetkisiz erişim, token başarısız oldu.");
+        res.status(401).json({ message: "Yetkisiz erişim!" });
+        return;
       }
     }
 
     if (!token) {
-      res.status(401);
-      throw new Error("Yetkisiz erişim, token bulunamadı.");
+      res.status(401).json({ message: "Yetkisiz erişim!" });
     }
   }
 );
@@ -62,8 +61,8 @@ export const authorizeRoles = (
 ) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {
-      res.status(401);
-      throw new Error("Yetkilendirme için kullanıcı bilgisi bulunamadı.");
+      res.status(401).json({ message: "Kullanıcı bilgisi bulunamadı" });
+      return;
     }
 
     if (req.user.role === "adminRole") {
@@ -71,8 +70,7 @@ export const authorizeRoles = (
     }
 
     if (!roles.includes(req.user.role)) {
-      res.status(403);
-      throw new Error("Rolünüz bu işleme yetkili değil.");
+      res.status(403).json({ message: "Rolünüz bu işlem için yetkili değil" });
     }
     next();
   };

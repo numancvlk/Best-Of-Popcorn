@@ -34,7 +34,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setUserToken(token);
         }
       } catch (e) {
-        console.error("Token yüklenirken hata oluştu");
+        console.log("Token yüklenirken hata oluştu");
       } finally {
         setIsLoading(false);
       }
@@ -58,9 +58,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     } catch (error: any) {
       const errorMessage =
-        error.response?.data?.message ||
-        error.message ||
-        "Giriş işlemi sırasında bilinmeyen bir hata oluştu.";
+        error.message || "Giriş işlemi sırasında bilinmeyen bir hata oluştu.";
 
       Alert.alert("Giriş Hatası", errorMessage);
       success = false;
