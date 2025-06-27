@@ -1,12 +1,11 @@
 import React from "react";
-import { View, Text, TextInput, Alert, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { RootStackParamList } from "../../types/types";
 import { StackScreenProps } from "@react-navigation/stack";
 
 import { useState } from "react";
-import authService from "src/services/authService";
-
 import styles from "src/styles/LoginScreenStyle";
+import { useAuth } from "src/context/AuthContext";
 
 type LoginScreenType = StackScreenProps<RootStackParamList, "Login">;
 
@@ -14,14 +13,20 @@ export default function LoginScreen({ navigation }: LoginScreenType) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { signIn } = useAuth();
+
   const handleLogin = async () => {
     try {
-      const userData = await authService.login(email, password);
-      Alert.alert("Başarılı", "Giriş Başarılı");
-      navigation.navigate("Home");
+      const success = await signIn(email, password);
+
+      if (success) {
+        setEmail("");
+        setPassword("");
+      } else {
+        setPassword("");
+      }
     } catch (err: any) {
-      const errorMessage = err.message || "Bilinmeyen bir hata oluştu!";
-      Alert.alert("Hata", errorMessage);
+      console.log("Loginde Hata Var.");
     }
   };
 

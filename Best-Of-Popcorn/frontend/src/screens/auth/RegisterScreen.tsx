@@ -19,8 +19,7 @@ export default function RegisterScreen({ navigation }: RegisterScreenType) {
       Alert.alert("Başarılı", "Kaydınız oluşturuldu! Giriş yapabilirsiniz.");
       navigation.navigate("Login");
     } catch (err: any) {
-      const errorMessage = err.message || "Bilinmeyen bir hata oluştu!";
-      Alert.alert("Hata", errorMessage);
+      console.log("Login Ekranında Hata");
     }
   };
 
