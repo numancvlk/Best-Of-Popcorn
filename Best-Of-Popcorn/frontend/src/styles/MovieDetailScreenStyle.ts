@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const stlyes = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#1a1a1a",
@@ -121,6 +121,55 @@ const stlyes = StyleSheet.create({
     lineHeight: 24,
     marginBottom: 20,
   },
+  sectionTitle: {
+    color: "#e74c3c",
+    fontSize: 22,
+    fontWeight: "bold",
+    marginTop: 20,
+    marginBottom: 10,
+  },
+
+  commentContainer: {
+    backgroundColor: "#2c2c2c",
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 10,
+    borderLeftWidth: 3,
+    borderLeftColor: "#e74c3c",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+
+  commentAuthor: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+
+  commentText: {
+    color: "#ccc",
+    fontSize: 14,
+    lineHeight: 20,
+  },
+
+  commentDate: {
+    color: "#999",
+    fontSize: 12,
+    marginTop: 5,
+    textAlign: "right",
+  },
+
+  noCommentsText: {
+    color: "#ccc",
+    fontSize: 16,
+    textAlign: "center",
+    marginTop: 10,
+    marginBottom: 20,
+  },
 });
 
-export default stlyes;
+export default styles;

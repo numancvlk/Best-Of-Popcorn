@@ -9,6 +9,7 @@ const TMDB_BACKDROP = Constants.expoConfig?.extra?.TMDB_BACKDROP;
 if (!API_URL) {
   console.log("API_URL YOK");
 }
+
 const movieService = {
   getPopularMovies: async () => {
     try {
@@ -37,7 +38,7 @@ const movieService = {
     }
   },
 
-  getMovieDetailFromTMDB: async (movieId: number) => {
+  getMovieDetailAndReviews: async (movieId: number) => {
     try {
       const userToken = await SecureStore.getItemAsync("userToken");
 

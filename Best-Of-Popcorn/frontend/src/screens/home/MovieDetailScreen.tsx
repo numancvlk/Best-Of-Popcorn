@@ -13,10 +13,19 @@ import { RootStackParamList } from "../../types/types";
 import { StackScreenProps } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 import movieService from "src/services/movieService";
-import stlyes from "src/styles/MovieDetailScreenStyle";
+import styles from "src/styles/MovieDetailScreenStyle";
 
 type MovieDetailType = StackScreenProps<RootStackParamList, "MovieDetail">;
 
+interface Comment {
+  id: string;
+  userId: {
+    username: string;
+  };
+  rating: number;
+  comment: string;
+  createdAt: string;
+}
 interface MovieDetail {
   id: number;
   title: string;
@@ -28,6 +37,7 @@ interface MovieDetail {
   runtime: number | null;
   genres: string;
   tagline: string | null;
+  reviews?: Comment[];
 }
 
 export default function MovieDetailScreen({
@@ -46,7 +56,7 @@ export default function MovieDetailScreen({
     const fetchMovieDetail = async () => {
       try {
         setLoading(true);
-        const movieData = await movieService.getMovieDetailFromTMDB(movieId);
+        const movieData = await movieService.getMovieDetailAndReviews(movieId);
         if (movieData) {
           setMovie(movieData);
         } else {
@@ -72,23 +82,23 @@ export default function MovieDetailScreen({
 
   if (!movie) {
     return (
-      <View style={stlyes.errorContainer}>
-        <Text style={stlyes.errorText}>Film bulunamadı.</Text>
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>Film bulunamadı.</Text>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          style={stlyes.backButton}
+          style={styles.backButton}
         >
-          <Text style={stlyes.backButtonText}>Geri Dön</Text>
+          <Text style={styles.backButtonText}>Geri Dön</Text>
         </TouchableOpacity>
       </View>
     );
   }
 
   return (
-    <ScrollView style={stlyes.container}>
+    <ScrollView style={styles.container}>
       <TouchableOpacity
         onPress={() => navigation.goBack()}
-        style={stlyes.backIconContainer}
+        style={styles.backIconContainer}
       >
         <Ionicons name="arrow-back-circle" size={36} color="#e74c3c" />
       </TouchableOpacity>
@@ -99,47 +109,69 @@ export default function MovieDetailScreen({
             source={{
               uri: `${TMDB_BACKDROP}${movie.backdrop_path}`,
             }}
-            style={stlyes.backdropImage}
+            style={styles.backdropImage}
           />
         </>
       )}
 
-      <View style={stlyes.posterContainer}>
+      <View style={styles.posterContainer}>
         {movie.poster_path ? (
           <>
             <Image
               source={{ uri: `${TMDB_POSTER}${movie.poster_path}` }}
-              style={stlyes.posterImage}
+              style={styles.posterImage}
             />
           </>
         ) : (
-          <View style={stlyes.noPosterContainer}>
-            <Text style={stlyes.noPosterText}>Afiş Yok</Text>
+          <View style={styles.noPosterContainer}>
+            <Text style={styles.noPosterText}>Afiş Yok</Text>
           </View>
         )}
       </View>
 
-      <View style={stlyes.infoContainer}>
-        <Text style={stlyes.title}>{movie.title}</Text>
-        {movie.tagline && <Text style={stlyes.tagline}>{movie.tagline}</Text>}
-        <Text style={stlyes.detailText}>
+      <View style={styles.infoContainer}>
+        <Text style={styles.title}>{movie.title}</Text>
+        {movie.tagline && <Text style={styles.tagline}>{movie.tagline}</Text>}
+        <Text style={styles.detailText}>
           Çıkış Tarihi:{" "}
           {movie.release_date ? movie.release_date.substring(0, 4) : "N/A"}
         </Text>
-        <Text style={stlyes.detailText}>
+        <Text style={styles.detailText}>
           IMDb Puanı:{" "}
           {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
         </Text>
         {movie.runtime && (
-          <Text style={stlyes.detailText}>Süre: {movie.runtime} dakika</Text>
+          <Text style={styles.detailText}>Süre: {movie.runtime} dakika</Text>
         )}
         {movie.genres && movie.genres?.length > 0 && (
-          <Text style={stlyes.detailText}>
+          <Text style={styles.detailText}>
             Türler: {movie.genres.split(",").join(",")}
           </Text>
         )}
-        <Text style={stlyes.overviewTitle}>Genel Bakış</Text>
-        <Text style={stlyes.overviewText}>{movie.overview || "BİLGİ YOK"}</Text>
+        <Text style={styles.overviewTitle}>Genel Bakış</Text>
+        <Text style={styles.overviewText}>{movie.overview || "BİLGİ YOK"}</Text>
+
+        <Text style={styles.sectionTitle}>Yorumlar</Text>
+
+        {movie.reviews && movie.reviews.length > 0 ? (
+          movie.reviews.map((comment, index) => (
+            <View key={index.toString()} style={styles.commentContainer}>
+              <Text style={styles.commentAuthor}>
+                {comment.userId.username}{" "}
+              </Text>
+              <Text style={styles.commentText}>{comment.comment}</Text>
+              {comment.createdAt && (
+                <Text style={styles.commentDate}>
+                  {new Date(comment.createdAt).toLocaleDateString()}
+                </Text>
+              )}
+            </View>
+          ))
+        ) : (
+          <Text style={styles.noCommentsText}>
+            Bu film için henüz yorum bulunmamaktadır.
+          </Text>
+        )}
       </View>
     </ScrollView>
   );
