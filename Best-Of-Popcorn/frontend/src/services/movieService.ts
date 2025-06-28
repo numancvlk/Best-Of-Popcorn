@@ -69,6 +69,29 @@ const movieService = {
       console.log("Film Çekilemedi");
     }
   },
+
+  addMovieReview: async (
+    movieId: number,
+    rating: number,
+    comment: string,
+    userToken: string
+  ) => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/movies/${movieId}/reviews`,
+        { rating, comment },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error: any) {
+      console.log("Yorum Eklenemedi");
+    }
+  },
 };
 
 export default movieService;
