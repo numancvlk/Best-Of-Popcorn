@@ -9,7 +9,6 @@ const TMDB_BACKDROP = Constants.expoConfig?.extra?.TMDB_BACKDROP;
 if (!API_URL) {
   console.log("API_URL YOK");
 }
-console.log(TMDB_POSTER, TMDB_BACKDROP);
 const movieService = {
   getPopularMovies: async () => {
     try {
