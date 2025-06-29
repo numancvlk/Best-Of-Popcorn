@@ -1,0 +1,65 @@
+import { StyleSheet } from "react-native";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f0f0f0",
+  },
+  listContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+  },
+  actorCard: {
+    flex: 1,
+    margin: 5,
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    alignItems: "center",
+    padding: 10,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  actorImage: {
+    width: 120,
+    height: 180,
+    borderRadius: 8,
+    marginBottom: 8,
+    resizeMode: "cover",
+  },
+  actorName: {
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 4,
+  },
+  actorPopularity: {
+    fontSize: 14,
+    color: "#666",
+  },
+  emptyText: {
+    textAlign: "center",
+    marginTop: 20,
+    fontSize: 16,
+    color: "#888",
+  },
+  noImageContainer: {
+    width: 120,
+    height: 180,
+    borderRadius: 8,
+    marginBottom: 8,
+    backgroundColor: "#ccc",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noImageText: {
+    color: "#666",
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});
+
+export default styles;

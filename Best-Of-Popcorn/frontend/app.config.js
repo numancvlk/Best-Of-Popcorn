@@ -6,6 +6,7 @@ export default ({ config }) => {
       API_URL: process.env.API_URL,
       TMDB_POSTER: process.env.TMDB_POSTER,
       TMDB_BACKDROP: process.env.TMDB_BACKDROP,
+      TMDB_PROFILE: process.env.TMDB_PROFILE,
     },
   };
 };

@@ -23,6 +23,7 @@ const movieService = {
           page: 1,
         },
       });
+
       return response.data.map((movie: any) => ({
         id: movie.id,
         title: movie.title,

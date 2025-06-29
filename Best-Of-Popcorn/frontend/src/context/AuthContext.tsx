@@ -44,26 +44,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         const storedEmail = await SecureStore.getItemAsync("userEmail");
         const storedRole = await SecureStore.getItemAsync("userRole");
 
-        if (token) {
+        if (
+          token &&
+          storedUserId &&
+          storedUsername &&
+          storedEmail &&
+          storedRole
+        ) {
           setUserToken(token);
-          if (storedUserId && storedUsername && storedEmail && storedRole) {
-            setCurrentUser({
-              id: storedUserId,
-              username: storedUsername,
-              email: storedEmail,
-              role: storedRole,
-            });
-          } else {
-            if (token) {
-              await SecureStore.deleteItemAsync("userToken");
-            }
-            await SecureStore.deleteItemAsync("userId");
-            await SecureStore.deleteItemAsync("username");
-            await SecureStore.deleteItemAsync("userEmail");
-            await SecureStore.deleteItemAsync("userRole");
-            setUserToken(null);
-            setCurrentUser(null);
-          }
+          setCurrentUser({
+            id: storedUserId,
+            username: storedUsername,
+            email: storedEmail,
+            role: storedRole,
+          });
+        } else {
+          await SecureStore.deleteItemAsync("userToken");
+          await SecureStore.deleteItemAsync("userId");
+          await SecureStore.deleteItemAsync("username");
+          await SecureStore.deleteItemAsync("userEmail");
+          await SecureStore.deleteItemAsync("userRole");
+          setUserToken(null);
+          setCurrentUser(null);
         }
       } catch (e) {
         console.log("Token yüklenirken hata oluştu");
