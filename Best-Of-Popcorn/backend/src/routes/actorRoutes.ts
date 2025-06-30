@@ -12,10 +12,15 @@ const router = express.Router();
 router.get(
   "/popular",
   protect,
-  authorizeRoles(["actorRole"]),
+  authorizeRoles(["actorRole", "basicUserRole"]),
   getPopularActors
 );
 
-router.get("/:id", protect, authorizeRoles(["actorRole"]), getActorDetails);
+router.get(
+  "/:id",
+  protect,
+  authorizeRoles(["actorRole", "basicUserRole"]),
+  getActorDetails
+);
 
 export default router;

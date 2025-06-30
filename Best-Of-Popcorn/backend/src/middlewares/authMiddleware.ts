@@ -9,7 +9,7 @@ declare global {
     interface Request {
       user?: {
         id: mongoose.Types.ObjectId;
-        role: "adminRole" | "actorRole" | "movieRole";
+        role: "adminRole" | "actorRole" | "movieRole" | "basicUserRole";
       };
     }
   }
@@ -42,7 +42,11 @@ export const protect = expressAsyncHandler(
 
         req.user = {
           id: user._id as mongoose.Types.ObjectId,
-          role: user.role as "adminRole" | "actorRole" | "movieRole",
+          role: user.role as
+            | "adminRole"
+            | "actorRole"
+            | "movieRole"
+            | "basicUserRole",
         };
 
         next();
@@ -68,7 +72,7 @@ export const protect = expressAsyncHandler(
 );
 
 export const authorizeRoles = (
-  roles: Array<"adminRole" | "actorRole" | "movieRole">
+  roles: Array<"adminRole" | "actorRole" | "movieRole" | "basicUserRole">
 ) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {

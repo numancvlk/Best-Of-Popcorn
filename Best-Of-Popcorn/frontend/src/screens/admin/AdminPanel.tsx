@@ -183,6 +183,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
               }
             >
               <Picker.Item label="Admin Role" value="adminRole" />
+              <Picker.Item label="User Role" value="basicUserRole" />
               <Picker.Item label="Movie Role" value="movieRole" />
               <Picker.Item label="Actor Role" value="actorRole" />
             </Picker>

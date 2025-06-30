@@ -3,7 +3,7 @@ declare global {
     interface Request {
       user?: {
         id: import("mongoose").Types.ObjectId;
-        role: "adminRole" | "actorRole" | "movieRole";
+        role: "adminRole" | "actorRole" | "movieRole" | "basicUserRole";
       };
     }
   }

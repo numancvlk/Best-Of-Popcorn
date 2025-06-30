@@ -53,8 +53,14 @@ export default function HomeScreen() {
 
   const isAdmin = currentUser?.role === "adminRole";
   const userRoles = currentUser?.role || "";
-  const hasMovieRole = userRoles === "movieRole" || userRoles === "adminRole";
-  const hasActorRole = userRoles === "actorRole" || userRoles === "adminRole";
+  const hasMovieRole =
+    userRoles === "movieRole" ||
+    userRoles === "adminRole" ||
+    userRoles === "basicUserRole";
+  const hasActorRole =
+    userRoles === "actorRole" ||
+    userRoles === "adminRole" ||
+    userRoles === "basicUserRole";
 
   return (
     <SafeAreaView style={styles.fullContainer}>

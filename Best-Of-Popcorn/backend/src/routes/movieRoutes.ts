@@ -15,7 +15,7 @@ const TMDB_BASE = process.env.TMDB_BASE_URL;
 router.get(
   "/popular",
   protect,
-  authorizeRoles(["adminRole", "movieRole"]),
+  authorizeRoles(["adminRole", "movieRole", "basicUserRole"]),
   expressAsyncHandler(async (req, res) => {
     if (!TMDB_API || !TMDB_BASE) {
       res
@@ -41,14 +41,14 @@ router.get(
 router.get(
   "/:id",
   protect,
-  authorizeRoles(["adminRole", "movieRole"]),
+  authorizeRoles(["adminRole", "movieRole", "basicUserRole"]),
   getMovieDetailAndReviews
 );
 
 router.post(
   "/:id/reviews",
   protect,
-  authorizeRoles(["adminRole", "movieRole"]),
+  authorizeRoles(["adminRole", "movieRole", "basicUserRole"]),
   addReviewToMovie
 );
 
