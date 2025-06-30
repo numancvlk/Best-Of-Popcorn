@@ -119,6 +119,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#555",
   },
+  adminButton: {
+    backgroundColor: "#8e44ad",
+    padding: 12,
+    borderRadius: 8,
+    marginHorizontal: 15,
+    marginBottom: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
+  },
+  adminButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
 });
 
 export default styles;

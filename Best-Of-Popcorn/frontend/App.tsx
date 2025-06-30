@@ -9,7 +9,7 @@ import HomeScreen from "./src/screens/home/HomeScreen";
 import LoginScreen from "./src/screens/auth/LoginScreen";
 import RegisterScreen from "./src/screens/auth/RegisterScreen";
 import MovieDetailScreen from "./src/screens/home/MovieDetailScreen";
-
+import ActorDetailScreen from "src/screens/home/ActorDetailScreen";
 import { AuthProvider, useAuth } from "./src/context/AuthContext";
 
 const STACK = createStackNavigator<RootStackParamList>();
@@ -28,7 +28,7 @@ function AppContent() {
   return (
     <NavigationContainer>
       <STACK.Navigator screenOptions={{ headerShown: false }}>
-        {userToken == null ? (
+        {userToken === null ? (
           <>
             <STACK.Screen name="Login" component={LoginScreen} />
             <STACK.Screen name="Register" component={RegisterScreen} />
@@ -37,6 +37,7 @@ function AppContent() {
           <>
             <STACK.Screen name="Home" component={HomeScreen} />
             <STACK.Screen name="MovieDetail" component={MovieDetailScreen} />
+            <STACK.Screen name="ActorDetail" component={ActorDetailScreen} />
           </>
         )}
       </STACK.Navigator>

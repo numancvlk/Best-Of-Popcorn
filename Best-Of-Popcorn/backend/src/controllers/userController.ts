@@ -16,7 +16,6 @@ const updateUserRole = expressAsyncHandler(
   async (req: Request, res: Response) => {
     const userId = req.params.id;
     const { role } = req.body;
-
     const validRoles: Array<"adminRole" | "actorRole" | "movieRole"> = [
       "adminRole",
       "actorRole",
@@ -27,6 +26,7 @@ const updateUserRole = expressAsyncHandler(
       res.status(400).json({ message: "Geçersiz Rol!" });
       return;
     }
+
     if (
       req.user &&
       req.user.id.toString() === userId &&
@@ -35,9 +35,15 @@ const updateUserRole = expressAsyncHandler(
       res.status(403).json({ message: "Kendi rolünüzü değiştiremezsiniz" });
       return;
     }
+
     const user = await User.findById(userId);
 
     if (!user) {
+      console.log(
+        "CONTROLLER LOG: HATA - Kullanıcı veritabanında bulunamadı:",
+        userId
+      );
+
       res.status(404).json({ message: "Kullanıcı Bulunamadı" });
       return;
     }

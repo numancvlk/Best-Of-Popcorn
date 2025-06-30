@@ -11,10 +11,12 @@ import { useAuth } from "src/context/AuthContext";
 import styles from "src/styles/HomeScreenStyle";
 import ActorList from "src/components/ActorList";
 import MovieList from "src/components/MovieList";
+import AdminPanel from "../admin/AdminPanel";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { HomeTabParamList } from "src/types/types";
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<HomeTabParamList>();
 
 export default function HomeScreen() {
   const { currentUser, isLoading: authLoading, signOut } = useAuth();
@@ -48,6 +50,7 @@ export default function HomeScreen() {
     );
   }
 
+  const isAdmin = currentUser?.role === "adminRole";
   const userRoles = currentUser?.role || "";
   const hasMovieRole = userRoles === "movieRole" || userRoles === "adminRole";
   const hasActorRole = userRoles === "actorRole" || userRoles === "adminRole";
@@ -64,6 +67,7 @@ export default function HomeScreen() {
           <Text style={styles.logoutButtonText}>Çıkış</Text>
         </TouchableOpacity>
       </View>
+
       {hasMovieRole && hasActorRole ? (
         <Tab.Navigator
           screenOptions={{
@@ -78,34 +82,56 @@ export default function HomeScreen() {
             headerShown: false,
           }}
         >
-          <Tab.Screen
-            name="Filmler"
-            component={MovieList}
-            options={{
-              tabBarLabel: "Filmler",
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons
-                  name="movie-roll"
-                  color={color}
-                  size={size}
-                />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="Aktörler"
-            component={ActorList}
-            options={{
-              tabBarLabel: "Aktörler",
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons
-                  name="account-group"
-                  color={color}
-                  size={size}
-                />
-              ),
-            }}
-          />
+          {hasMovieRole && (
+            <Tab.Screen
+              name="MovieScreen"
+              component={MovieList}
+              options={{
+                tabBarLabel: "Filmler",
+                tabBarIcon: ({ color, size }) => (
+                  <MaterialCommunityIcons
+                    name="movie-roll"
+                    color={color}
+                    size={size}
+                  />
+                ),
+              }}
+            />
+          )}
+
+          {hasActorRole && (
+            <Tab.Screen
+              name="ActorScreen"
+              component={ActorList}
+              options={{
+                tabBarLabel: "Aktörler",
+                tabBarIcon: ({ color, size }) => (
+                  <MaterialCommunityIcons
+                    name="account-group"
+                    color={color}
+                    size={size}
+                  />
+                ),
+              }}
+            />
+          )}
+
+          {isAdmin && (
+            <Tab.Screen
+              name="AdminPanel"
+              component={AdminPanel}
+              options={{
+                tabBarLabel: "Admin Panel",
+                tabBarIcon: ({ color, size }) => (
+                  <MaterialCommunityIcons
+                    name="account-cog"
+                    color={color}
+                    size={size}
+                  />
+                ),
+              }}
+            />
+          )}
         </Tab.Navigator>
       ) : hasMovieRole ? (
         <MovieList />

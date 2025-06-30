@@ -16,6 +16,9 @@ declare global {
 }
 
 const jwtSecret = process.env.JWT_SECRET!;
+if (!jwtSecret) {
+  process.exit(1);
+}
 
 export const protect = expressAsyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -44,14 +47,22 @@ export const protect = expressAsyncHandler(
 
         next();
       } catch (error: any) {
-        console.error(error);
-        res.status(401).json({ message: "Yetkisiz erişim!" });
+        if (error.name === "TokenExpiredError") {
+          res.status(401).json({
+            message: "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.",
+          });
+        } else if (error.name === "JsonWebTokenError") {
+          res.status(401).json({
+            message: "Geçersiz kimlik doğrulama. Lütfen tekrar giriş yapın.",
+          });
+        } else {
+          res.status(401).json({ message: "Yetkisiz erişim!" });
+        }
         return;
       }
-    }
-
-    if (!token) {
-      res.status(401).json({ message: "Yetkisiz erişim!" });
+    } else {
+      res.status(401).json({ message: "Yetkilendirme tokeni bulunamadı." });
+      return;
     }
   }
 );
