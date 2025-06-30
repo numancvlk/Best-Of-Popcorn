@@ -2,11 +2,11 @@ import {
   View,
   Text,
   FlatList,
-  ActivityIndicator,
   Alert,
   TouchableOpacity,
   Modal,
   SafeAreaView,
+  Platform,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
@@ -20,6 +20,9 @@ import adminService from "src/services/adminService";
 
 import { useAuth } from "src/context/AuthContext";
 import styles from "src/styles/AdminPanelStyles";
+
+import { Colors, Spacing } from "src/styles/GlobalStyles";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 type AdminPanelProps = CompositeScreenProps<
   BottomTabScreenProps<HomeTabParamList, "AdminPanel">,
@@ -103,15 +106,31 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
   const renderUserItem = ({ item }: { item: User }) => {
     return (
       <View style={styles.userItem}>
-        <View>
-          <Text>Kullanıcı ID: {item._id}</Text>
-          <Text>Kullanıcı Adı: {item.username}</Text>
-          <Text>Kullanıcı E-Posta: {item.email}</Text>
-          <Text>Kullanıcı Rolü: {item.role}</Text>
+        <View style={styles.userInfo}>
+          <Text style={styles.userText}>
+            <Text style={{ fontWeight: "bold" }}>Kullanıcı Adı:</Text>{" "}
+            <Text style={styles.userRole}>{item.username}</Text>
+          </Text>
+          <Text style={styles.userText}>
+            <Text style={{ fontWeight: "bold" }}>E-Posta:</Text> {item.email}
+          </Text>
+          <Text style={[styles.userText, styles.userTextLast]}>
+            {" "}
+            <Text style={{ fontWeight: "bold" }}>Rol:</Text>{" "}
+            <Text style={styles.userRole}>{item.role}</Text>
+          </Text>
+          <TouchableOpacity
+            onPress={() => openRoleModal(item)}
+            style={styles.updateButton}
+          >
+            <MaterialCommunityIcons
+              name="account-edit"
+              size={20}
+              color={Colors.textHighlight}
+            />
+            <Text style={styles.updateButtonText}>Rolü Güncelle</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => openRoleModal(item)}>
-          <Text>Rolü Güncelle</Text>
-        </TouchableOpacity>
       </View>
     );
   };
@@ -119,18 +138,18 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
-        <Text style={{ color: "#fff", marginTop: 10 }}>
-          Kullanıcılar yükleniyor...
-        </Text>
+        <MaterialCommunityIcons
+          name="loading"
+          size={50}
+          color={Colors.primary}
+        />
+        <Text style={styles.loadingText}>Kullanıcılar yükleniyor...</Text>
       </View>
     );
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.headerTitle}>Admin Paneli</Text>
-
       <FlatList
         data={users}
         keyExtractor={(item) => item._id}
@@ -148,14 +167,20 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalTitle}>
-              Rol Güncelle: {selectedUser?.username}
-            </Text>
+            <MaterialCommunityIcons
+              name="account-details"
+              size={30}
+              color={Colors.textHighlight}
+              style={{ marginBottom: Spacing.small }}
+            />
 
             <Picker
               selectedValue={newRole}
               style={styles.picker}
               onValueChange={(itemValue) => setNewRole(itemValue as string)}
+              itemStyle={
+                Platform.OS === "android" ? styles.pickerItem : undefined
+              }
             >
               <Picker.Item label="Admin Role" value="adminRole" />
               <Picker.Item label="Movie Role" value="movieRole" />
@@ -167,12 +192,23 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
                 style={[styles.button, styles.buttonClose]}
                 onPress={() => setModalVisible(false)}
               >
+                <MaterialCommunityIcons
+                  name="close-circle-outline"
+                  size={20}
+                  color={Colors.textHighlight}
+                />
+
                 <Text style={styles.textStyle}>İptal</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.buttonUpdate]}
                 onPress={handleUpdateRole}
               >
+                <MaterialCommunityIcons
+                  name="check-circle-outline"
+                  size={20}
+                  color={Colors.textHighlight}
+                />
                 <Text style={styles.textStyle}>Güncelle</Text>
               </TouchableOpacity>
             </View>
