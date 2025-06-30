@@ -107,18 +107,18 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
     return (
       <View style={styles.userItem}>
         <View style={styles.userInfo}>
-          <Text style={styles.userText}>
-            <Text style={{ fontWeight: "bold" }}>Kullanıcı Adı:</Text>{" "}
-            <Text style={styles.userRole}>{item.username}</Text>
+          <Text style={styles.userLabel}>
+            Kullanıcı Adı: <Text style={styles.userValue}>{item.username}</Text>
           </Text>
-          <Text style={styles.userText}>
-            <Text style={{ fontWeight: "bold" }}>E-Posta:</Text> {item.email}
+          <Text style={styles.userLabel}>
+            E-Posta: <Text style={styles.userValue}>{item.email}</Text>
           </Text>
-          <Text style={[styles.userText, styles.userTextLast]}>
-            {" "}
-            <Text style={{ fontWeight: "bold" }}>Rol:</Text>{" "}
-            <Text style={styles.userRole}>{item.role}</Text>
+          <Text style={[styles.userLabel, styles.userTextLast]}>
+            Rol: <Text style={styles.userValue}>{item.role}</Text>
           </Text>
+        </View>
+
+        <View style={{ flexDirection: "column", alignItems: "flex-end" }}>
           <TouchableOpacity
             onPress={() => openRoleModal(item)}
             style={styles.updateButton}

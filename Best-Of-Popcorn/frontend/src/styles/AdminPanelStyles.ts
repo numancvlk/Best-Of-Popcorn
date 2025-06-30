@@ -1,5 +1,3 @@
-// frontend/src/screens/AdminPanelScreenStyles.ts
-
 import { StyleSheet, Dimensions, Platform } from "react-native";
 import {
   Colors,
@@ -28,14 +26,24 @@ const styles = StyleSheet.create({
     fontSize: FontSize.medium,
     color: Colors.textPrimary,
   },
-
+  headerTitle: {
+    fontSize: FontSize.xxLarge,
+    fontWeight: "bold",
+    color: Colors.textHighlight,
+    textAlign: "center",
+    paddingVertical: Spacing.medium + (Platform.OS === "ios" ? 10 : 0),
+    backgroundColor: Colors.card,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+    ...Shadows.medium,
+  },
   listContent: {
     padding: Spacing.medium,
   },
   userItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
     backgroundColor: Colors.card,
     borderRadius: BorderRadius.large,
     padding: Spacing.medium,
@@ -46,10 +54,16 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
   },
   userInfo: {
-    flex: 1,
-    paddingRight: Spacing.small,
+    width: "100%",
+    marginBottom: Spacing.small,
   },
-  userText: {
+  userLabel: {
+    fontSize: FontSize.medium,
+    color: Colors.textPrimary,
+    fontWeight: "bold",
+    marginBottom: Spacing.xSmall / 2,
+  },
+  userValue: {
     fontSize: FontSize.medium,
     color: Colors.textSecondary,
     marginBottom: Spacing.xSmall / 2,
@@ -69,9 +83,9 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.medium,
     ...Shadows.medium,
     flexDirection: "row",
+    alignSelf: "flex-end",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: Spacing.small,
   },
   updateButtonText: {
     color: Colors.textHighlight,
