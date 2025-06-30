@@ -67,7 +67,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
 
   const handleUpdateRole = async () => {
     if (!selectedUser || !newRole) {
-      console.log("Selected User yada New Role boş");
+      Alert.alert("HATA", "Seçilen kullanıcı bulunamadı");
       return;
     }
 
@@ -87,7 +87,10 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
       setModalVisible(false);
       fetchUsers();
     } catch (error) {
-      console.log("Rol güncellenirken bir hata oluştu");
+      Alert.alert(
+        "HATA",
+        "Kullanıcının rolü güncellenirken bir hata oluştu. Lütfen daha sonra tekrar deneyiniz"
+      );
     }
   };
 

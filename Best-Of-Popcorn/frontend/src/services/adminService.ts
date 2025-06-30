@@ -24,7 +24,7 @@ const listAllUsers = async () => {
       return response.data.users;
     }
   } catch (error: any) {
-    console.log("Kullanıcılar listelenemedi.");
+    Alert.alert("HATA", "Kullanıcılar listelenemedi");
   }
 };
 
@@ -32,7 +32,7 @@ const updateUserRole = async (userId: string, newRole: string) => {
   try {
     const userToken = await SecureStore.getItemAsync("userToken");
     if (!userToken) {
-      Alert.alert("Kimlik Doğrulanamadı");
+      Alert.alert("HATA", "Kimlik Doğrulanamadı");
       return;
     }
     const response = await axios.put(
@@ -46,8 +46,8 @@ const updateUserRole = async (userId: string, newRole: string) => {
       }
     );
     return response.data.user;
-  } catch (error) {
-    console.log("Kullanıcı rolü güncellenemedi");
+  } catch (error: any) {
+    Alert.alert("HATA", "Kullanıcı rolü güncellenemedi");
   }
 };
 

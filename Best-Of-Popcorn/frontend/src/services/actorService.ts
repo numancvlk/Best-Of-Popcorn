@@ -5,6 +5,23 @@ import Constants from "expo-constants";
 const API_URL = Constants.expoConfig?.extra?.API_URL;
 const TMDB_PROFILE_PATH = Constants.expoConfig?.extra?.TMDB_PROFILE;
 
+interface ActorDetail {
+  id: number;
+  name: string;
+  biography: string;
+  birthday: string;
+  place_of_birth: string;
+  profile_path: string | null;
+  movie_credits: MovieCredit[];
+}
+
+interface MovieCredit {
+  id: number;
+  title: string;
+  poster_path: string | null;
+  character: string;
+}
+
 if (!API_URL) {
   console.log("API_URL YOK");
 }
@@ -39,15 +56,22 @@ const actorService = {
     }
   },
 
-  getActorDetails: async (actorId: number) => {
+  getActorDetails: async (actorId: number): Promise<ActorDetail> => {
     try {
       const userToken = await SecureStore.getItemAsync("userToken");
 
+      const headers: { [key: string]: string } = {
+        "Content-Type": "application/json",
+      };
+
+      if (userToken) {
+        headers.Authorization = `Bearer ${userToken}`;
+      }
+
       const response = await axios.get(`${API_URL}/actors/${actorId}`, {
-        headers: {
-          ...(userToken && { Authorization: `Bearer ${userToken}` }),
-        },
+        headers: headers,
       });
+
       const actor = response.data;
 
       const fullProfilePath = actor.profile_path
@@ -72,7 +96,7 @@ const actorService = {
         movie_credits: movieCreditsFormatted,
       };
     } catch (error: any) {
-      console.log("AKTÖR DETAYLARI ÇEKİLEMEDİ");
+      throw new Error("Aktör detayları yüklenemiyor");
     }
   },
 };

@@ -39,11 +39,6 @@ const updateUserRole = expressAsyncHandler(
     const user = await User.findById(userId);
 
     if (!user) {
-      console.log(
-        "CONTROLLER LOG: HATA - Kullanıcı veritabanında bulunamadı:",
-        userId
-      );
-
       res.status(404).json({ message: "Kullanıcı Bulunamadı" });
       return;
     }
