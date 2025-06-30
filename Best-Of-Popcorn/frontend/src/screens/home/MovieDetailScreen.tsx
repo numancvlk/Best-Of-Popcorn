@@ -16,6 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import movieService from "src/services/movieService";
 import styles from "src/styles/MovieDetailScreenStyle";
 import { useAuth } from "src/context/AuthContext";
+import { Colors } from "src/styles/GlobalStyles";
 
 type MovieDetailType = StackScreenProps<RootStackParamList, "MovieDetail">;
 
@@ -138,9 +139,9 @@ export default function MovieDetailScreen({
 
   if (loading) {
     return (
-      <View>
-        <ActivityIndicator size="large" color="#e74c3c" />
-        <Text>Film detayları yükleniyor...</Text>
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+        <Text style={styles.loadingText}>Film detayları yükleniyor...</Text>
       </View>
     );
   }

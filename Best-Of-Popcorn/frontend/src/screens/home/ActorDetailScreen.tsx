@@ -7,11 +7,14 @@ import {
   Alert,
   ScrollView,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
-import { useRoute, RouteProp } from "@react-navigation/native";
+import { useRoute, RouteProp, useNavigation } from "@react-navigation/native";
 import actorService from "../../services/actorService";
 import styles from "src/styles/ActorDetailScreenStyles";
-
+import { Ionicons } from "@expo/vector-icons";
+import { RootStackParamList } from "src/types/types";
+import { NavigationProp } from "@react-navigation/native";
 type ActorDetailRouteParams = {
   actorId: number;
 };
@@ -21,8 +24,14 @@ type ActorDetailScreenRouteProp = RouteProp<
   "ActorDetail"
 >;
 
+type ActorDetailScreenNavigationProp = NavigationProp<
+  RootStackParamList,
+  "ActorDetail"
+>;
+
 const ActorDetailScreen: React.FC = () => {
   const route = useRoute<ActorDetailScreenRouteProp>();
+  const navigation = useNavigation<ActorDetailScreenNavigationProp>();
   const { actorId } = route.params;
 
   const [actorDetails, setActorDetails] = useState<any>(null);
@@ -94,6 +103,12 @@ const ActorDetailScreen: React.FC = () => {
 
   return (
     <ScrollView style={styles.container}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backIconContainer}
+      >
+        <Ionicons name="arrow-back-circle" size={36} color="#e74c3c" />
+      </TouchableOpacity>
       <View style={styles.header}>
         {actorDetails.profile_path ? (
           <Image
