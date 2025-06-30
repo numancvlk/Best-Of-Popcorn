@@ -15,6 +15,7 @@ import AdminPanel from "../admin/AdminPanel";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { HomeTabParamList } from "src/types/types";
+import { Colors } from "src/styles/GlobalStyles";
 
 const Tab = createBottomTabNavigator<HomeTabParamList>();
 
@@ -71,14 +72,10 @@ export default function HomeScreen() {
       {hasMovieRole && hasActorRole ? (
         <Tab.Navigator
           screenOptions={{
-            tabBarActiveTintColor: "#e74c3c",
-            tabBarInactiveTintColor: "gray",
-            tabBarLabelStyle: { fontSize: 12, fontWeight: "bold" },
-            tabBarStyle: {
-              backgroundColor: "#fff",
-              height: 60,
-              paddingBottom: 5,
-            },
+            tabBarActiveTintColor: Colors.primary,
+            tabBarInactiveTintColor: Colors.textSecondary,
+            tabBarLabelStyle: styles.tabBarLabelStyle,
+            tabBarStyle: styles.tabBarStyle,
             headerShown: false,
           }}
         >

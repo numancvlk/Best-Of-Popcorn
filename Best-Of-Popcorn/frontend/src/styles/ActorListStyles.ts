@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "../styles/GlobalStyles";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: Colors.background,
   },
   listContainer: {
     paddingHorizontal: 10,
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
   actorCard: {
     flex: 1,
     margin: 5,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.card,
     borderRadius: 8,
     alignItems: "center",
     padding: 10,
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   actorName: {
+    color: Colors.textHighlight,
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",

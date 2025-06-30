@@ -1,138 +1,90 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
+import {
+  Colors,
+  FontSize,
+  Spacing,
+  BorderRadius,
+  Shadows,
+} from "../styles/GlobalStyles";
 
 const styles = StyleSheet.create({
   fullContainer: {
     flex: 1,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: Colors.background,
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f8f8f8",
-  },
-  loadingText: {
-    marginTop: 10,
-    fontSize: 16,
-    color: "#333",
-  },
-  noRoleContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "#f8f8f8",
-  },
-  noRoleText: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 10,
-    color: "#333",
-  },
-  noRoleSubText: {
-    fontSize: 14,
-    color: "#666",
-    textAlign: "center",
-  },
-
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    backgroundColor: "#e74c3c",
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    paddingHorizontal: Spacing.medium,
+    paddingTop:
+      Platform.OS === "android" ? Spacing.medium + 10 : Spacing.medium,
+    paddingBottom: Spacing.small,
+    backgroundColor: Colors.card,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+    ...Shadows.light,
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: FontSize.xLarge,
     fontWeight: "bold",
-    color: "#fff",
+    color: Colors.textHighlight,
   },
   logoutButton: {
-    backgroundColor: "#c0392b",
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 20,
+    backgroundColor: Colors.error,
+    paddingVertical: Spacing.xSmall,
+    paddingHorizontal: Spacing.small,
+    borderRadius: BorderRadius.small,
+    ...Shadows.light,
   },
   logoutButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
+    color: Colors.textHighlight,
+    fontSize: FontSize.medium,
+    fontWeight: "600",
   },
 
-  container: {
+  tabBarLabelStyle: {
+    fontSize: FontSize.small,
+    fontWeight: "bold",
+  },
+  tabBarStyle: {
+    backgroundColor: Colors.card,
+    height: 65,
+    paddingBottom: Platform.OS === "android" ? Spacing.xSmall : Spacing.xSmall,
+    borderTopWidth: 1,
+    borderTopColor: Colors.border,
+    ...Shadows.light,
+  },
+
+  noRoleContainer: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
-  },
-  movieGridList: {
-    paddingVertical: 10,
-  },
-  row: {
-    justifyContent: "space-around",
-    marginBottom: 10,
-  },
-  movieGridItem: {
-    width: "45%",
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    overflow: "hidden",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    marginBottom: 10,
-  },
-  gridPosterImage: {
-    width: "100%",
-    height: 250,
-    resizeMode: "cover",
-  },
-  gridNoPosterContainer: {
-    width: "100%",
-    height: 250,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ccc",
+    padding: Spacing.large,
+    backgroundColor: Colors.background,
   },
-  gridNoPosterText: {
-    color: "#666",
-    fontSize: 16,
+  noRoleText: {
+    fontSize: FontSize.large,
+    color: Colors.textPrimary,
+    textAlign: "center",
+    marginBottom: Spacing.small,
   },
-  gridMovieInfo: {
-    padding: 10,
+  noRoleSubText: {
+    fontSize: FontSize.medium,
+    color: Colors.textSecondary,
+    textAlign: "center",
   },
-  gridMovieTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  gridMovieDetails: {
-    fontSize: 12,
-    color: "#555",
-  },
-  adminButton: {
-    backgroundColor: "#8e44ad",
-    padding: 12,
-    borderRadius: 8,
-    marginHorizontal: 15,
-    marginBottom: 10,
-    alignItems: "center",
+
+  loadingContainer: {
+    flex: 1,
     justifyContent: "center",
-    marginTop: 10,
+    alignItems: "center",
+    backgroundColor: Colors.background,
   },
-  adminButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 16,
+  loadingText: {
+    marginTop: Spacing.medium,
+    fontSize: FontSize.medium,
+    color: Colors.textPrimary,
   },
 });
 

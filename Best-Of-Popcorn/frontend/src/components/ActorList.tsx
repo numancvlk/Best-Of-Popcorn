@@ -7,12 +7,13 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import actorService from "../services/actorService";
 import { useNavigation } from "@react-navigation/native";
-import styles from "src/styles/ActorListStyles";
 import { NavigationProp } from "@react-navigation/native";
 
+//-----------------DAHİLİ-----------------------
 import { RootStackParamList } from "src/types/types";
+import styles from "src/styles/ActorListStyles";
+import actorService from "../services/actorService";
 
 interface Actor {
   id: number;

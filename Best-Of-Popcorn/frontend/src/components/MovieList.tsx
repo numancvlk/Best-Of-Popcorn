@@ -8,11 +8,13 @@ import {
   FlatList,
   ActivityIndicator,
 } from "react-native";
-import movieService from "../services/movieService";
-import styles from "../styles/HomeScreenStyle";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 
+//-------------DAHİLİ----------------
 import { RootStackParamList } from "src/types/types";
+import { Colors } from "src/styles/GlobalStyles";
+import movieService from "../services/movieService";
+import styles from "../styles/MovieListStyle";
 
 interface Movie {
   id: number;
@@ -36,7 +38,7 @@ const MovieList: React.FC = () => {
         setMovies(fetchedMovies);
       } catch (error) {
         Alert.alert(
-          "Hata",
+          "HATA",
           "Filmler yüklenemedi. Lütfen internet bağlantınızı kontrol edin."
         );
       } finally {
@@ -78,7 +80,7 @@ const MovieList: React.FC = () => {
     <View style={styles.container}>
       {loading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#e74c3c" />
+          <ActivityIndicator size="large" color={Colors.primary} />
           <Text style={styles.loadingText}>Filmler yükleniyor...</Text>
         </View>
       ) : (
@@ -89,6 +91,7 @@ const MovieList: React.FC = () => {
           numColumns={2}
           columnWrapperStyle={styles.row}
           contentContainerStyle={styles.movieGridList}
+          showsVerticalScrollIndicator={false}
         />
       )}
     </View>
