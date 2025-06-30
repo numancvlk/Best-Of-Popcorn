@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Alert, TouchableOpacity } from "react-native";
-
-import { RootStackParamList } from "../../types/types";
 import { StackScreenProps } from "@react-navigation/stack";
+
+//----------------DAHİLİ---------------------
+import { RootStackParamList } from "../../types/types";
+import { Colors } from "src/styles/GlobalStyles";
 import authService from "src/services/authService";
 import styles from "src/styles/RegisterScreenStyle";
 
@@ -19,37 +21,46 @@ export default function RegisterScreen({ navigation }: RegisterScreenType) {
       Alert.alert("Başarılı", "Kaydınız oluşturuldu! Giriş yapabilirsiniz.");
       navigation.navigate("Login");
     } catch (err: any) {
-      console.log("Login Ekranında Hata");
+      Alert.alert(
+        "KAYIT HATASI",
+        "Kayıt oluşturulurken bir hata oluştu. Lütfen daha sonra tekrar deneyiniz."
+      );
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>BEST OF POPCORN - KAYIT</Text>
+      <Text style={styles.title}>BEST OF POPCORN KAYIT</Text>
 
       <TextInput
         style={styles.input}
         placeholder="KULLANICI ADI"
+        placeholderTextColor={Colors.textSecondary}
         value={username}
         onChangeText={setUsername}
         autoCapitalize="none"
+        selectionColor={Colors.primary}
       />
 
       <TextInput
         style={styles.input}
         placeholder="E-POSTA"
+        placeholderTextColor={Colors.textSecondary}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
+        selectionColor={Colors.primary}
       />
 
       <TextInput
         style={styles.input}
         placeholder="ŞİFRE"
+        placeholderTextColor={Colors.textSecondary}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        selectionColor={Colors.primary}
       />
 
       <TouchableOpacity

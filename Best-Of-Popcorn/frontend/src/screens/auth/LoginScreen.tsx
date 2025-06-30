@@ -1,11 +1,12 @@
-import React from "react";
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { RootStackParamList } from "../../types/types";
+import React, { useState } from "react";
+import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 
-import { useState } from "react";
-import styles from "src/styles/LoginScreenStyle";
+//--------------DAHİLİ--------------------
 import { useAuth } from "src/context/AuthContext";
+import { RootStackParamList } from "../../types/types";
+import { Colors } from "src/styles/GlobalStyles";
+import styles from "src/styles/LoginScreenStyle";
 
 type LoginScreenType = StackScreenProps<RootStackParamList, "Login">;
 
@@ -26,29 +27,36 @@ export default function LoginScreen({ navigation }: LoginScreenType) {
         setPassword("");
       }
     } catch (err: any) {
-      console.log("Loginde Hata Var.");
+      Alert.alert(
+        "Giriş Hatası",
+        "Giriş yaparken hata oluştu. Lütfen daha sonra tekrar deneyiniz."
+      );
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>BEST OF POPCORN - GİRİŞ</Text>
+      <Text style={styles.title}>BEST OF POPCORN GİRİŞ</Text>
 
       <TextInput
         style={styles.input}
         placeholder="E-POSTA"
+        placeholderTextColor={Colors.textSecondary}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
+        selectionColor={Colors.primary}
       />
 
       <TextInput
         style={styles.input}
         placeholder="ŞİFRE"
+        placeholderTextColor={Colors.textSecondary}
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        selectionColor={Colors.primary}
       />
 
       <TouchableOpacity
