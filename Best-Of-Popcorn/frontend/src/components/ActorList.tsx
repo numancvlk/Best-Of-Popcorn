@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -27,39 +27,54 @@ interface Actor {
 const ActorList: React.FC = () => {
   const [actors, setActors] = useState<Actor[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const fetchActors = async (pageNum: number, query: string = "") => {
-    if (!hasMore && pageNum > 1) return;
-    setLoading(true);
-    try {
-      let data: Actor[] = [];
-
-      if (query.trim() !== "") {
-        data = await actorService.searchActors(query, pageNum);
-      } else {
-        data = await actorService.getPopularActors(pageNum);
+  const fetchActors = useCallback(
+    async (pageNum: number, query: string = "") => {
+      if (!hasMore && pageNum > 1) {
+        setLoadingMore(false);
+        return;
       }
-      if (data && data.length > 0) {
-        setActors((prevActors) =>
-          pageNum === 1 ? data : [...prevActors, ...data]
-        );
-        setPage(pageNum);
-        if (data.length < 20) {
+      if (pageNum === 1) {
+        setLoading(true);
+      } else {
+        setLoadingMore(true);
+      }
+      try {
+        let data: Actor[] = [];
+
+        if (query.trim() !== "") {
+          data = await actorService.searchActors(query, pageNum);
+        } else {
+          data = await actorService.getPopularActors(pageNum);
+        }
+        if (data && data.length > 0) {
+          setActors((prevActors) => {
+            const newActors = pageNum === 1 ? data : [...prevActors, ...data];
+            const uniqueActors = Array.from(
+              new Map(newActors.map((actor) => [actor.id, actor])).values()
+            );
+            return uniqueActors;
+          });
+          setPage(pageNum);
+          if (data.length < 20) {
+            setHasMore(false);
+          }
+        } else {
           setHasMore(false);
         }
-      } else {
-        setHasMore(false);
+      } catch (error) {
+        console.log("Aktörleri çekerken hata");
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.log("Aktörleri çekerken hata");
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    []
+  );
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(
