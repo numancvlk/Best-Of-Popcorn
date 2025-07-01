@@ -80,8 +80,7 @@ const movieService = {
         vote_average: movie.vote_average,
       }));
     } catch (error: any) {
-      console.log("Film Arama Başarısız");
-      throw error;
+      throw new Error("Film arama başarısız oldu.");
     }
   },
 

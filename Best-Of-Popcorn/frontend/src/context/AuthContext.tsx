@@ -68,7 +68,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setCurrentUser(null);
         }
       } catch (e) {
-        console.log("Token yüklenirken hata oluştu");
+        Alert.alert("HATA", "Bir hata oluştu.");
         setUserToken(null);
         setCurrentUser(null);
       } finally {

@@ -68,14 +68,6 @@ const ActorDetailScreen: React.FC = () => {
     );
   }
 
-  if (error) {
-    return (
-      <View style={styles.centered}>
-        <Text style={styles.errorText}>Hata: {error}</Text>
-      </View>
-    );
-  }
-
   if (!actorDetails) {
     return (
       <View style={styles.centered}>

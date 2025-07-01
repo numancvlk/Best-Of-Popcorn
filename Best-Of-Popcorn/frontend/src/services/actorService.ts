@@ -86,8 +86,7 @@ const actorService = {
           : null,
       }));
     } catch (error: any) {
-      console.error("Aktör arama hatası");
-      throw error;
+      throw new Error("Aktörler yüklenmedi.");
     }
   },
 

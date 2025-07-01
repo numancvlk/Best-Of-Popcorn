@@ -30,7 +30,6 @@ const searchMovies = expressAsyncHandler(
 
       res.status(200).json(response.data.results);
     } catch (error: any) {
-      console.error("Film arama hatası");
       res.status(500).json({
         message: "Film arama sırasında bir hata oluştu.",
       });
@@ -149,7 +148,7 @@ const getMovieDetailAndReviews = expressAsyncHandler(
         res.status(404).json({ message: "Film Bulunamadı" });
         return;
       }
-      res.status(error.response?.status || 500);
+      res.status(500);
     }
   }
 );

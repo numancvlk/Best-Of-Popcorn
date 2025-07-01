@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProp } from "@react-navigation/native";
@@ -68,7 +69,10 @@ const ActorList: React.FC = () => {
           setHasMore(false);
         }
       } catch (error) {
-        console.log("Aktörleri çekerken hata");
+        Alert.alert(
+          "HATA",
+          "Aktörler sayfasında hata oluştu. Lütfen daha sonra tekrar deneyiniz."
+        );
       } finally {
         setLoading(false);
       }

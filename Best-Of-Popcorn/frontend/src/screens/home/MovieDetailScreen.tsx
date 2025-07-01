@@ -130,7 +130,6 @@ export default function MovieDetailScreen({
         Alert.alert("Hata", "Yorum eklenirken bir sorun oluştu.");
       }
     } catch (err: any) {
-      console.error("Yorum gönderme hatası:", err);
       Alert.alert("Hata", "Yorumunuz gönderilemedi. Lütfen tekrar deneyin.");
     } finally {
       setSubmittingReview(false);

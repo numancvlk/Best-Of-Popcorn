@@ -16,11 +16,9 @@ const updateUserRole = expressAsyncHandler(
   async (req: Request, res: Response) => {
     const userId = req.params.id;
     const { role } = req.body;
-    const validRoles: Array<"adminRole" | "actorRole" | "movieRole"> = [
-      "adminRole",
-      "actorRole",
-      "movieRole",
-    ];
+    const validRoles: Array<
+      "adminRole" | "actorRole" | "movieRole" | "basicUserRole"
+    > = ["adminRole", "actorRole", "movieRole", "basicUserRole"];
 
     if (!role || !validRoles.includes(role)) {
       res.status(400).json({ message: "Geçersiz Rol!" });
