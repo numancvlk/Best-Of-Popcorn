@@ -25,32 +25,31 @@ Yeni kayıtlı kullanıcıların rolü default olarak **User Role** olmaktadır.
 
 ---
 ### 📸 Ekran Görüntüleri 
-| Login Ekranı | Film Detay Sayfası | 
+| Login Ekranı | Kayıt Ekranı | 
 | :---------------------------------: | :------------------------: |
 |![Login](https://github.com/user-attachments/assets/736d98e1-a29d-440e-a3ac-6b804098ca70) | ![Register](https://github.com/user-attachments/assets/7262252e-9f69-4a20-b188-37287ff25c47)
 
  | Admin Film Sayfası | Admin Actor Sayfası | 
 | :---------------------------------: | :------------------------: |
-| ![Admin_Film](https://github.com/user-attachments/assets/329ee2a6-6e9d-4cf3-ac08-d5a8b5e6a565) | ![Admin_Actors](https://github.com/user-attachments/assets/c114bcf7-4471-4642-89c0-447207a42263)
+| ![Admi_Film](https://github.com/user-attachments/assets/8e731448-98ba-4d8e-aa5d-d1df04b0a9ab) | ![Admin_Actors](https://github.com/user-attachments/assets/c114bcf7-4471-4642-89c0-447207a42263)
 
  | Admin Panel Sayfası | Update Role Sayfası | 
 | :---------------------------------: | :------------------------: |
 | ![AdminPanel](https://github.com/user-attachments/assets/66958a8f-0fe1-44c5-81ea-c07041539eb3) | ![UpdateRoles](https://github.com/user-attachments/assets/f00f2a71-6e68-4047-a51f-e37ec28556ed)
 
-
  | Film Detayları Sayfası | Yorum Kısmı | 
 | :---------------------------------: | :------------------------: |
-| ![Movie_Detail](https://github.com/user-attachments/assets/84166699-e9b0-42dd-8b66-382a2e6d9ea7) | ![Comments](https://github.com/user-attachments/assets/e9b9025f-afb2-4c3f-a7b6-072ad1bb749c)
+|  ![Movie_Detail](https://github.com/user-attachments/assets/6c12904f-334f-4be5-9bea-7d3a1b69b369) | ![yorumm](https://github.com/user-attachments/assets/210b925e-d9a2-4aa1-b437-d01503e0813d)
 
 
- | Basic User Ana Sayfası | Movie Role Ana Sayfası | 
+ | Actor Role Ana Sayfası | Movie Role Ana Sayfası | 
 | :---------------------------------: | :------------------------: |
-| ![BasicUserTabs](https://github.com/user-attachments/assets/98efb811-68ce-425e-b6f0-98a6cbec06c3) | ![actorLoverRole](https://github.com/user-attachments/assets/724e5e4a-826f-48b7-9e76-7687ce77995f)
-
+| ![actorLoverRole](https://github.com/user-attachments/assets/e9e8841e-2a91-422f-99a7-8bf0da56fce9) | ![MovieRole](https://github.com/user-attachments/assets/35b63e11-af2f-4f2c-a2ec-2fc89b6eb94f)
 
  | Basic User Ana Sayfası |  
 | :---------------------------------: | 
-| ![movieLoverRole](https://github.com/user-attachments/assets/ba143e2d-3ec7-4eb5-ba09-92a133629da5)|
+| ![BasicUserRole](https://github.com/user-attachments/assets/06a6bac4-b4df-4d95-9646-6f702147052b)|
+
 
 
 ---
