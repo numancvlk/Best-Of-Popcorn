@@ -51,7 +51,6 @@ Yeni kayıtlı kullanıcıların rolü default olarak **User Role** olmaktadır.
 | ![BasicUserRole](https://github.com/user-attachments/assets/06a6bac4-b4df-4d95-9646-6f702147052b)|
 
 
-
 ---
 ## 🚀 Kurulum ve Çalıştırma 
 
@@ -68,7 +67,8 @@ Yeni kayıtlı kullanıcıların rolü default olarak **User Role** olmaktadır.
 
 3.  **Ortam Değişkenlerini Ayarlayın:**
     Bu proje, API anahtarları gibi hassas bilgiler kullanır. Bu bilgileri doğrudan kodunuza yazmaktan kaçınmalısınız.
-    * Projenin backend klasöründe ve frontend klasörününe, **`.env`** dosyanızı oluşturun. 
+    Projenin backend klasöründe ve frontend klasörününe, **`.env`** dosyanızı oluşturun.
+    
     **BACKEND .env dosyası**
       - PORT = Uygulamanın backend'e istek göndereceği adres.
       - MONGO_URI = MongoDB üzerinden aldığınız size özel olan connection string.
