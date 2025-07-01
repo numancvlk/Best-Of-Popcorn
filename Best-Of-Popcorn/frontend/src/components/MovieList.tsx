@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -6,13 +6,11 @@ import {
   Alert,
   Image,
   FlatList,
-  ActivityIndicator,
 } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 //-------------DAHİLİ----------------
 import { RootStackParamList } from "src/types/types";
-import { Colors } from "src/styles/GlobalStyles";
 import movieService from "../services/movieService";
 import styles from "../styles/MovieListStyle";
 
@@ -25,17 +23,46 @@ interface Movie {
   vote_average: number;
 }
 
+const MOVIES_PER_PAGE = 8;
+
 const MovieList: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState<number>(1);
+  const [hasMore, setHasMore] = useState<boolean>(true);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  useEffect(() => {
-    const fetchMovies = async () => {
+  const fetchMovies = useCallback(
+    async (pageNum: number) => {
+      if (!hasMore && pageNum > 1) return;
+
+      setLoading(true);
       try {
-        setLoading(true);
-        const fetchedMovies = await movieService.getPopularMovies();
-        setMovies(fetchedMovies);
+        const data: Movie[] = await movieService.getPopularMovies(pageNum);
+
+        if (data && data.length > 0) {
+          setMovies((prevMovies) => {
+            const existingMovieIds = new Set(
+              prevMovies.map((movie) => movie.id)
+            );
+            const uniqueNewMovies = data.filter(
+              (movie) => !existingMovieIds.has(movie.id)
+            );
+
+            if (pageNum === 1) {
+              return uniqueNewMovies;
+            } else {
+              return [...prevMovies, ...uniqueNewMovies];
+            }
+          });
+          setPage(pageNum);
+
+          if (data.length < MOVIES_PER_PAGE) {
+            setHasMore(false);
+          }
+        } else {
+          setHasMore(false);
+        }
       } catch (error) {
         Alert.alert(
           "HATA",
@@ -44,10 +71,19 @@ const MovieList: React.FC = () => {
       } finally {
         setLoading(false);
       }
-    };
+    },
+    [hasMore]
+  );
 
-    fetchMovies();
-  }, []);
+  useEffect(() => {
+    fetchMovies(1);
+  }, [fetchMovies]);
+
+  const handleLoadMore = () => {
+    if (!loading && hasMore) {
+      fetchMovies(page + 1);
+    }
+  };
 
   const renderMovieItem = ({ item }: { item: Movie }) => (
     <TouchableOpacity
@@ -78,22 +114,17 @@ const MovieList: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {loading ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={Colors.primary} />
-          <Text style={styles.loadingText}>Filmler yükleniyor...</Text>
-        </View>
-      ) : (
-        <FlatList
-          data={movies}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderMovieItem}
-          numColumns={2}
-          columnWrapperStyle={styles.row}
-          contentContainerStyle={styles.movieGridList}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
+      <FlatList
+        data={movies}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderMovieItem}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        contentContainerStyle={styles.movieGridList}
+        showsVerticalScrollIndicator={false}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.5}
+      />
     </View>
   );
 };

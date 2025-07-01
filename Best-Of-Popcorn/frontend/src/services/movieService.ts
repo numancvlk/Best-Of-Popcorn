@@ -11,7 +11,7 @@ if (!API_URL) {
 }
 
 const movieService = {
-  getPopularMovies: async () => {
+  getPopularMovies: async (page: number = 1, limit: number = 8) => {
     try {
       const userToken = await SecureStore.getItemAsync("userToken");
 
@@ -20,11 +20,11 @@ const movieService = {
           ...(userToken && { Authorization: `Bearer ${userToken}` }),
         },
         params: {
-          page: 1,
+          page: page,
         },
       });
-
-      return response.data.map((movie: any) => ({
+      console.log(response.data);
+      return response.data.results.map((movie: any) => ({
         id: movie.id,
         title: movie.title,
         release_date: movie.release_date,

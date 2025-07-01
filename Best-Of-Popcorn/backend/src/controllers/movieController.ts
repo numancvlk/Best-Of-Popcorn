@@ -126,4 +126,4 @@ const getMovieDetailAndReviews = expressAsyncHandler(
   }
 );
 
-export { addReviewToMovie, getMovieDetailAndReviews };
+export { addReviewToMovie, getMovieDetailAndReviews, getPopularMovies };
