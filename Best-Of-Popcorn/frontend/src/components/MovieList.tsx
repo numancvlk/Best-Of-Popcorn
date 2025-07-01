@@ -6,6 +6,7 @@ import {
   Alert,
   Image,
   FlatList,
+  TextInput,
 } from "react-native";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 
@@ -13,6 +14,7 @@ import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "src/types/types";
 import movieService from "../services/movieService";
 import styles from "../styles/MovieListStyle";
+import { Colors } from "src/styles/GlobalStyles";
 
 interface Movie {
   id: number;
@@ -30,15 +32,21 @@ const MovieList: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const fetchMovies = useCallback(
-    async (pageNum: number) => {
+    async (pageNum: number, query: string = "") => {
       if (!hasMore && pageNum > 1) return;
 
       setLoading(true);
       try {
-        const data: Movie[] = await movieService.getPopularMovies(pageNum);
+        let data: Movie[] = [];
+        if (query.trim() !== "") {
+          data = await movieService.searchMovies(query, pageNum);
+        } else {
+          data = await movieService.getPopularMovies(pageNum);
+        }
 
         if (data && data.length > 0) {
           setMovies((prevMovies) => {
@@ -76,12 +84,19 @@ const MovieList: React.FC = () => {
   );
 
   useEffect(() => {
-    fetchMovies(1);
-  }, [fetchMovies]);
+    const delayDebounceFn = setTimeout(
+      () => {
+        fetchMovies(1, searchQuery);
+      },
+      searchQuery ? 500 : 0
+    );
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery, fetchMovies]);
 
   const handleLoadMore = () => {
     if (!loading && hasMore) {
-      fetchMovies(page + 1);
+      fetchMovies(page + 1, searchQuery);
     }
   };
 
@@ -114,6 +129,14 @@ const MovieList: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <TextInput
+        style={styles.searchBar}
+        placeholder="Film ara..."
+        placeholderTextColor={Colors.textSecondary}
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
+
       <FlatList
         data={movies}
         keyExtractor={(item) => item.id.toString()}

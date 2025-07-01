@@ -6,6 +6,31 @@ import expressAsyncHandler from "express-async-handler";
 const TMDB_API = process.env.TMDB_API_KEY;
 const TMDB_BASE = process.env.TMDB_BASE_URL;
 
+const searchActor = expressAsyncHandler(async (req: Request, res: Response) => {
+  const { query, page } = req.query;
+
+  if (!query) {
+    res.status(400).json({ message: "Arama sorgusu boş olamaz" });
+    return;
+  }
+  try {
+    const response = await axios.get(`${TMDB_BASE}/search/person`, {
+      params: {
+        api_key: TMDB_API,
+        language: "tr-TR",
+        query: query,
+        page: page || 1,
+      },
+    });
+
+    res.status(200).json(response.data.results);
+  } catch (error: any) {
+    res.status(500).json({
+      message: "Aktör arama sırasında bir hata oluştu.",
+    });
+  }
+});
+
 const getPopularActors = expressAsyncHandler(
   async (req: Request, res: Response) => {
     if (!TMDB_API || !TMDB_BASE) {
@@ -68,4 +93,4 @@ const getActorDetails = expressAsyncHandler(
     }
   }
 );
-export { getPopularActors, getActorDetails };
+export { getPopularActors, getActorDetails, searchActor };

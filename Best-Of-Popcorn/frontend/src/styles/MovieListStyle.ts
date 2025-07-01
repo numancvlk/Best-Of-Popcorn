@@ -102,6 +102,23 @@ const styles = StyleSheet.create({
     fontSize: FontSize.small,
     color: Colors.textSecondary,
   },
+  searchBar: {
+    height: 50,
+    backgroundColor: Colors.secondary,
+    borderRadius: 25,
+    paddingHorizontal: 20,
+    marginHorizontal: 15,
+    marginBottom: 10,
+    marginTop: 10,
+    color: Colors.textPrimary,
+    fontSize: 16,
+  },
+  emptyListText: {
+    color: Colors.textSecondary,
+    textAlign: "center",
+    marginTop: 50,
+    fontSize: 18,
+  },
 });
 
 export default styles;

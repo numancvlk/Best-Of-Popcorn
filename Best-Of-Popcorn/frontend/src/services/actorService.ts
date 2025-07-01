@@ -22,6 +22,13 @@ interface MovieCredit {
   character: string;
 }
 
+interface Actor {
+  id: number;
+  name: string;
+  profile_path: string | null;
+  popularity: number;
+}
+
 if (!API_URL) {
   console.log("API_URL YOK");
 }
@@ -53,6 +60,34 @@ const actorService = {
       });
     } catch (error: any) {
       console.log("AKTÖRLER GETİRME HATASI");
+    }
+  },
+
+  searchActors: async (query: string, page: number = 1): Promise<Actor[]> => {
+    try {
+      const userToken = await SecureStore.getItemAsync("userToken");
+
+      const response = await axios.get(`${API_URL}/actors/search/`, {
+        headers: {
+          ...(userToken && { Authorization: `Bearer ${userToken}` }),
+        },
+        params: {
+          query: query,
+          page: page,
+        },
+      });
+
+      return response.data.map((actor: any) => ({
+        id: actor.id,
+        name: actor.name,
+        popularity: actor.popularity,
+        profile_path: actor.profile_path
+          ? `${TMDB_PROFILE_PATH}${actor.profile_path}`
+          : null,
+      }));
+    } catch (error: any) {
+      console.error("Aktör arama hatası");
+      throw error;
     }
   },
 

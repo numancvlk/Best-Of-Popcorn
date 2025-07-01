@@ -4,10 +4,13 @@ import express from "express";
 import {
   getPopularActors,
   getActorDetails,
+  searchActor,
 } from "../controllers/actorController";
 import { protect, authorizeRoles } from "../middlewares/authMiddleware";
 
 const router = express.Router();
+
+router.get("/search", protect, searchActor);
 
 router.get(
   "/popular",

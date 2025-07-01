@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   Image,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProp } from "@react-navigation/native";
@@ -14,6 +15,7 @@ import { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "src/types/types";
 import styles from "src/styles/ActorListStyles";
 import actorService from "../services/actorService";
+import { Colors } from "src/styles/GlobalStyles";
 
 interface Actor {
   id: number;
@@ -27,13 +29,20 @@ const ActorList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const fetchActors = async (pageNum: number) => {
+  const fetchActors = async (pageNum: number, query: string = "") => {
     if (!hasMore && pageNum > 1) return;
     setLoading(true);
     try {
-      const data = await actorService.getPopularActors(pageNum);
+      let data: Actor[] = [];
+
+      if (query.trim() !== "") {
+        data = await actorService.searchActors(query, pageNum);
+      } else {
+        data = await actorService.getPopularActors(pageNum);
+      }
       if (data && data.length > 0) {
         setActors((prevActors) =>
           pageNum === 1 ? data : [...prevActors, ...data]
@@ -53,12 +62,19 @@ const ActorList: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchActors(1);
-  }, []);
+    const delayDebounceFn = setTimeout(
+      () => {
+        fetchActors(1, searchQuery);
+      },
+      searchQuery ? 500 : 0
+    );
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery, fetchActors]);
 
   const handleLoadMore = () => {
     if (!loading && hasMore) {
-      fetchActors(page + 1);
+      fetchActors(page + 1, searchQuery);
     }
   };
 
@@ -83,6 +99,13 @@ const ActorList: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <TextInput
+        style={styles.searchBar}
+        placeholder="Aktör ara..."
+        placeholderTextColor={Colors.textSecondary}
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+      />
       <FlatList
         data={actors}
         renderItem={renderActor}

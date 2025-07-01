@@ -5,10 +5,13 @@ import {
   addReviewToMovie,
   getMovieDetailAndReviews,
   getPopularMovies,
+  searchMovies,
 } from "../controllers/movieController";
 import { protect, authorizeRoles } from "../middlewares/authMiddleware";
 
 const router = express.Router();
+
+router.get("/search", protect, searchMovies);
 
 router.get(
   "/popular",

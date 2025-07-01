@@ -10,6 +10,34 @@ import User from "../models/User";
 const TMDB_API = process.env.TMDB_API_KEY;
 const TMDB_BASE = process.env.TMDB_BASE_URL;
 
+const searchMovies = expressAsyncHandler(
+  async (req: Request, res: Response) => {
+    const { query, page } = req.query;
+
+    if (!query) {
+      res.status(400).json({ message: "Arama sorgusu boş olamaz" });
+      return;
+    }
+    try {
+      const response = await axios.get(`${TMDB_BASE}/search/movie`, {
+        params: {
+          api_key: TMDB_API,
+          language: "tr-TR",
+          query: query,
+          page: page || 1,
+        },
+      });
+
+      res.status(200).json(response.data.results);
+    } catch (error: any) {
+      console.error("Film arama hatası");
+      res.status(500).json({
+        message: "Film arama sırasında bir hata oluştu.",
+      });
+    }
+  }
+);
+
 const getPopularMovies = expressAsyncHandler(
   async (req: Request, res: Response) => {
     if (!TMDB_API || !TMDB_BASE) {
@@ -126,4 +154,9 @@ const getMovieDetailAndReviews = expressAsyncHandler(
   }
 );
 
-export { addReviewToMovie, getMovieDetailAndReviews, getPopularMovies };
+export {
+  addReviewToMovie,
+  getMovieDetailAndReviews,
+  getPopularMovies,
+  searchMovies,
+};

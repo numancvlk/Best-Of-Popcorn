@@ -10,8 +10,22 @@ if (!API_URL) {
   console.log("API_URL YOK");
 }
 
+interface Movie {
+  id: number;
+  title: string;
+  overview: string;
+  release_date: string;
+  poster_path: string | null;
+  backdrop_path: string | null;
+  vote_average: number;
+  genres: any[];
+  runtime: number;
+  tagline: string;
+  reviews: any[];
+}
+
 const movieService = {
-  getPopularMovies: async (page: number = 1, limit: number = 8) => {
+  getPopularMovies: async (page: number = 1) => {
     try {
       const userToken = await SecureStore.getItemAsync("userToken");
 
@@ -36,6 +50,38 @@ const movieService = {
       }));
     } catch (error: any) {
       console.log("Poster Hata");
+    }
+  },
+
+  searchMovies: async (query: string, page: number = 1): Promise<Movie[]> => {
+    try {
+      const userToken = await SecureStore.getItemAsync("userToken");
+
+      const response = await axios.get(`${API_URL}/movies/search`, {
+        headers: {
+          ...(userToken && { Authorization: `Bearer ${userToken}` }),
+        },
+        params: {
+          query: query,
+          page: page,
+        },
+      });
+
+      const results = response.data.results || response.data;
+
+      return results.map((movie: any) => ({
+        id: movie.id,
+        title: movie.title,
+        release_date: movie.release_date,
+        overview: movie.overview,
+        poster_path: movie.poster_path
+          ? `${TMDB_POSTER}${movie.poster_path}`
+          : null,
+        vote_average: movie.vote_average,
+      }));
+    } catch (error: any) {
+      console.log("Film Arama Başarısız");
+      throw error;
     }
   },
 
