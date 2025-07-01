@@ -1,4 +1,4 @@
-# 🎬 REACT NATIVE - MOVIE & ACTOR APP 
+# 🎬 REACT NATIVE - BEST OF POPCORN - MOVIE & ACTOR APP 
 
 ## 🚀 Proje Hakkında 
 
@@ -70,17 +70,17 @@ Yeni kayıtlı kullanıcıların rolü default olarak **User Role** olmaktadır.
     Bu proje, API anahtarları gibi hassas bilgiler kullanır. Bu bilgileri doğrudan kodunuza yazmaktan kaçınmalısınız.
     * Projenin backend klasöründe ve frontend klasörününe, **`.env`** dosyanızı oluşturun. 
     **BACKEND .env dosyası**
-      PORT = Uygulamanın backend'e istek göndereceği adres.
-      MONGO_URI = MongoDB üzerinden aldığınız size özel olan connection string.
-      JWT_SECRET = Kimlik doğrulama işlemleri için gereklidir.
-      TMDB_API_KEY = The Movie Database üzerinden alacağınız API KEY.
-      TMDB_BASE_URL = TMDB dökümantasyonundan ulaşabilirsiniz.
+      - PORT = Uygulamanın backend'e istek göndereceği adres.
+      - MONGO_URI = MongoDB üzerinden aldığınız size özel olan connection string.
+      - JWT_SECRET = Kimlik doğrulama işlemleri için gereklidir.
+      - TMDB_API_KEY = The Movie Database üzerinden alacağınız API KEY.
+      - TMDB_BASE_URL = TMDB dökümantasyonundan ulaşabilirsiniz.
 
     **FRONTEND .env dosyası**
-      API_URL = Uygulamanızın kendi BACKEND SUNUCUSUNA bağlanacağı ana adres (API_URL/api şeklinde).
-      TMDB_POSTER = TMDB dökümantasyonundan ulaşabilirsiniz.
-      TMDB_BACKDROP = TMDB dökümantasyonundan ulaşabilirsiniz.
-      TMDB_PROFILE = TMDB dökümantasyonundan ulaşabilirsiniz.
+      - API_URL = Uygulamanızın kendi BACKEND SUNUCUSUNA bağlanacağı ana adres (API_URL/api şeklinde).
+      - TMDB_POSTER = TMDB dökümantasyonundan ulaşabilirsiniz.
+      - TMDB_BACKDROP = TMDB dökümantasyonundan ulaşabilirsiniz.
+      - TMDB_PROFILE = TMDB dökümantasyonundan ulaşabilirsiniz.
       
 
 5.  **Uygulamayı Başlatın:**
