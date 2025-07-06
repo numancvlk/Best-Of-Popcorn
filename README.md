@@ -2,8 +2,8 @@
 
 ## 🚀 Proje Hakkında 
 
-Bu projede, frontend kısmında **React Native**, backend kısmında ise **express** kullandım. Veritabanı olarak **MongoDB** kullandım. Film ve aktör verilerini çekerken ise **TMDb API** kullandım.
-Bu uygulamayla popüler film ve aktör verilerini görebileceğiniz bir mobil uygulamadır. Kullanıcılar, en güncel filmleri ve sevilen aktörleri kolayca bulabilir, arama yapabilir ve detay sayfalarında zengin bilgilere ulaşabilirler.
+Bu mobil uygulama, React Native (TypeScript ile), Express.js (TypeScript ile) ve MongoDB teknolojilerini kullanarak geliştirilmiştir. Film ve aktör verileri için ise TMDb API'den faydalanılmıştır.
+Uygulama, kullanıcılara popüler film ve aktör verilerine kolayca erişim imkanı sunar. En güncel filmleri ve sevilen aktörleri keşfedebilir, detaylı arama yapabilir ve zengin bilgi içerikli detay sayfalarına ulaşabilirsiniz.
 
 ## ✨ Özellikler 
 
